@@ -1,0 +1,19 @@
+//    private void exposelds(RepositoryRestConfiguration config) {
+//
+//        // 從 EntityManager 獲取所有實體類型
+//        Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
+//
+//        // 建立一個清單，用於存放所有實體類的 Java 類型
+//        List<Class> entityClasses = new ArrayList<>();
+//
+//        // 遍歷每個實體類型，提取 Java 類型並加入清單
+//        for (EntityType<?> entity : entities) {
+//            entityClasses.add(entity.getJavaType());
+//        }
+//
+//        // 將清單轉換為陣列
+//        Class[] domainTypes = entityClasses.toArray(new Class[0]);
+//
+//        // 動態暴露所有實體類的 ID
+//        config.exposeIdsFor(domainTypes);
+//    }

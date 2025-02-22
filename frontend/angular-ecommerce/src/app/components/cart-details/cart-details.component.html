@@ -1,0 +1,69 @@
+<div class="main-content">
+    <div class="select-content select-content-p40">
+        <div class="container-fluid">
+            <div *ngIf="cartItem.length > 0">
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="40%">產品圖像</th>
+                        <th width="40%">產品描述</th>
+                        <th width="20%"></th>
+                    </tr>
+                    <tr *ngFor="let tempCartItem of cartItem">
+                        <td>
+                            <img src="{{tempCartItem.imageUrl}}" class="img-responsive" width="150px">
+                        </td>
+                        <td>
+                            <p>{{ tempCartItem.name }}</p>
+                            <p>{{ tempCartItem.unitPrice}}元</p>
+                        </td>
+                        <td>
+                            <div class="item">
+                                <label>數量:</label>
+                                
+                                <div class="row no-gutters ">
+                                    <div class="col">
+                                        <button (click)="reduceQuantity(tempCartItem)" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="col ml-4 m4-2">
+                                        {{tempCartItem.quantity}}
+                                    
+                                    </div>
+
+                                        <div class="col"> 
+                                            <button (click)="increaseQuantity(tempCartItem)" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+
+                                </div>
+                                
+                            </div>
+                            <div>
+                                <button (click)="remove(tempCartItem)" class="btn btn-danger btn-sm">刪除</button>
+                            </div>
+                            
+
+                            <p>小計:{{tempCartItem.quantity*tempCartItem.unitPrice}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                            <td style="font-weight: bold ">
+                                <p>總數:{{totalQuantity}}</p>
+                                <p>總價:{{totalPrice}}元</p>
+                                <div>
+                                    <a routerLink="/checkout" class="btn btn-primary">確認訂單</a>
+                                </div>   
+                            </td>
+                    </tr>
+                </table>
+            </div>
+            <div *ngIf="cartItem.length==0" class="alert alert-warning col-md-12" role="alert">
+               您的購物車沒有東西
+            </div>
+        </div>
+    </div>
+</div>

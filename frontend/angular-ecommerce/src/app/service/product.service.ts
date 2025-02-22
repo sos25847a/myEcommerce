@@ -1,0 +1,92 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Product } from '../common/product';
+import { map } from 'rxjs';
+import { ProductCategory } from '../common/product-category';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductService {
+
+  private baseUrl = environment.myShopUrl + '/products';
+  private categoryUrl = environment.myShopUrl + '/product-category';
+
+  constructor(private httpClient:HttpClient) { }
+
+  getProduct(theProductId: number):Observable<Product> {
+    // 建立product id的基本Url
+    const productUrl = `${this.baseUrl}/${theProductId}`;
+
+    return this.httpClient.get<Product>(productUrl);
+  }
+
+  getProductListPaginate(thePage:number,
+                         thePageSize:number,
+                         theCategoryId:number):Observable<GetResponseProducts>{
+
+    // 建立category的基本Url,page和pageSize
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`
+    + `&page=${thePage}&size=${thePageSize}`; 
+
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
+  }
+  
+  getProductList(theCategoryId:number):Observable<Product[]>{
+
+    // 建立category的基本Url
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`; 
+
+    return this.getProducts(searchUrl);
+  }
+
+  searchProducts(theKeyword: string): Observable<Product[]>{
+    // keyword的基本Url
+    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`; 
+
+    return this.getProducts(searchUrl);
+  }
+
+  searchProductsPaginate(thePage:number,
+                         thePageSize:number,
+                         theKeyword:string):Observable<GetResponseProducts>{
+
+    // 建立keyword的基本Url,page和pageSize
+    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`
+    + `&page=${thePage}&size=${thePageSize}`; 
+
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
+  }
+
+
+  private getProducts(searchUrl: string): Observable<Product[]> {
+    return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(
+      map(response => response._embedded.products)
+    );
+  }
+
+
+  getProductCategories(): Observable<ProductCategory[]> {
+    return this.httpClient.get<ProductCategory[]>(this.categoryUrl).pipe(
+      map(response => response)  // 這裡直接返回陣列
+    );
+  }
+
+}
+interface GetResponseProducts{
+  _embedded:{
+    products: Product[];
+  },
+  page: {
+    size:number,
+    totalElements:number,
+    totalPages:number,
+    number:number
+  }
+}
+
+
+
+

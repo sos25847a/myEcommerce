@@ -1,0 +1,17 @@
+<div class="detail-section">
+    <div class="container-fluid">
+        <img src="{{product.imageUrl}}" class="detail-img">
+
+        <h3>{{product.name}}</h3>
+        <div class="price">${{product.unitPrice}}</div>
+        <button (click)="addToCart()" class="btn btn-success  rounded-pill shadow">加到購物車</button>
+
+        <hr>
+        <h5>商品敘述:</h5>
+        <p>{{product.description}}</p>
+
+        <a routerLink="/product" class="mt-5">回到首頁</a>
+    </div>
+
+
+</div>

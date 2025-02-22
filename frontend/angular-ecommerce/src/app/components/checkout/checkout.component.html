@@ -1,0 +1,273 @@
+<div class="main-content page-m">
+    <div class="select-content select-content-p30">
+        <div class="container-fluid">
+            <form [formGroup]="checkoutFormGroup" (ngSubmit)="onSubmit()">
+
+                <!-- customer -->
+                 <div formGroupName="customer" class="form-area">
+                    <h3>收件人資訊</h3>
+
+                    <div class="row">
+                        <div class="col-md-2"><label>姓名</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="name" type="text">
+                                    <!--驗證錯誤  -->
+                                <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="alert alert-danger mt-1">
+
+                                    <div *ngIf="name?.errors?.['required']">
+                                        名字不能為空
+                                    </div>
+
+                                    <div *ngIf="name?.errors?.['notWhitespace']">
+                                        名字不能為空格
+                                    </div>
+
+                                    <div *ngIf="name?.errors?.['minlength']">
+                                        名字不能低於兩個字
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"><label>手機號碼</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="phoneNumber" type="text">
+                                
+                                <div *ngIf="phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)" class="alert alert-danger mt-1">
+
+                                    <div *ngIf="phoneNumber?.errors?.['required']">
+                                        手機號碼不能為空
+                                    </div>
+
+                                    <div *ngIf="phoneNumber?.errors?.['pattern']">
+                                        格式輸入錯誤
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                 </div>
+
+                 <!--shippingAddress  -->
+                 <div formGroupName="shippingAddress" class="form-area">    
+                    <h3>收件地址</h3>
+
+                    <div class="row">
+                        <div class="col-md-2"><label>縣市</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">   
+                                <select  formControlName="city"  (change)="getTownship('shippingAddress')" >
+                                    <option *ngFor="let tempCity of city" [ngValue] = "tempCity"  > 
+                                        {{tempCity.name}}    
+                                    </option>
+                                </select>
+                                <!-- 驗證 -->
+                                <div *ngIf="shippingAddressCity?.invalid && (shippingAddressCity?.dirty || shippingAddressCity?.touched)" class="alert alert-danger mt-1">
+
+                                    <div *ngIf="shippingAddressCity?.errors?.['required']">
+                                        不能為空
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"><label>鄉鎮地區</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="township">
+                                    <option *ngFor="let township of shippingAddressTownship" [ngValue] = "township">
+                                        {{ township.name }}
+                                    </option>
+                                </select>
+
+                                <!-- 驗證 -->      
+                                <div *ngIf="shippingAddressTownshipControl?.invalid && (shippingAddressTownshipControl?.dirty || shippingAddressTownshipControl?.touched)" class="alert alert-danger mt-1">
+
+                                    <div *ngIf="shippingAddressTownshipControl?.errors?.['required']">
+                                        不能為空
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-2"><label>郵遞區號</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="zipCode" type="text">
+                            </div>
+
+                            <!-- 驗證 -->      
+                            <div *ngIf="shippingAddressZipcode?.invalid && (shippingAddressZipcode?.dirty || shippingAddressZipcode?.touched)" class="alert alert-danger mt-1">
+
+                                <div *ngIf="shippingAddressZipcode?.errors?.['required']">
+                                    不能為空
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"><label>地址</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="address" type="text">
+                            </div>
+
+                            <!-- 驗證 -->
+                            <div *ngIf="shippingAddressAddress?.invalid && (shippingAddressAddress?.dirty || shippingAddressAddress?.touched)" class="alert alert-danger mt-1">
+
+                                <div *ngIf="shippingAddressAddress?.errors?.['required']">
+                                    不能為空
+                                </div>
+
+                                <div *ngIf="shippingAddressAddress?.errors?.['notWhitespace']">
+                                    地址不能為空格
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                 </div>
+
+                 <!-- 如果送貨地址跟帳單地址一樣 -->
+                 <div class="mb-5">
+                    <input type="checkbox" class="me-4" id="checkbox__sameAddress" (change)="copyShippingAddressToBillingAddress($event)">
+                    <label for="checkbox__sameAddress">
+                      <span>帳單地址和收件地址一致</span>
+                    </label>
+                </div>
+    
+
+                 <!-- billingAddress -->
+                 <div formGroupName="billingAddress" class="form-area">
+                    <h3>帳單地址</h3>
+
+                    <div class="row">
+                        <div class="col-md-2"><label>縣市</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="city"  (change)="getTownship('billingAddress')" >
+                                    <option *ngFor="let tempCity of city" [ngValue] = "tempCity"  > 
+                                        {{tempCity.name}}    
+                                    </option>
+                                </select>
+
+                                <!-- 驗證 -->      
+                                <div *ngIf="billingAddressCity?.invalid && (billingAddressCity?.dirty || billingAddressCity?.touched)" class="alert alert-danger mt-1">
+
+                                    <div *ngIf="billingAddressCity?.errors?.['required']">
+                                        不能為空
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"><label>鄉鎮地區</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <select formControlName="township">
+                                    <option *ngFor="let township of billingAddressTownship" [ngValue] = "township">
+                                        {{ township.name }}
+                                    </option>
+                                </select>
+
+                                <!-- 驗證 -->      
+                                <div *ngIf="billingAddressTownshipControl?.invalid && (billingAddressTownshipControl?.dirty || billingAddressTownshipControl?.touched)" class="alert alert-danger mt-1">
+
+                                    <div *ngIf="billingAddressTownshipControl?.errors?.['required']">
+                                        不能為空
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"><label>郵遞區號</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="zipCode" type="text">
+                            </div>
+
+                            <!-- 驗證 -->      
+                            <div *ngIf="billingAddressZipcode?.invalid && (billingAddressZipcode?.dirty || billingAddressZipcode?.touched)" class="alert alert-danger mt-1">
+
+                                <div *ngIf="billingAddressZipcode?.errors?.['required']">
+                                    不能為空
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2"><label>地址</label></div>
+                        <div class="col-md-9">
+                            <div class="input-space">
+                                <input formControlName="address" type="text">
+                            </div>
+
+                            <!-- 驗證 -->
+                            <div *ngIf="billingAddressAddress?.invalid && (billingAddressAddress?.dirty || billingAddressAddress?.touched)" class="alert alert-danger mt-1">
+
+                                <div *ngIf="billingAddressAddress?.errors?.['required']">
+                                    不能為空
+                                </div>
+
+                                <div *ngIf="billingAddressAddress?.errors?.['notWhitespace']">
+                                    地址不能為空格
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                 </div>
+
+                 <!-- stripe 信用卡 element  -->    
+                  <div formGroupName="creditCard" class="form-area">
+
+                    <h3>信用卡或簽帳卡</h3>
+
+                    <div id="card-element">
+                        
+                    </div>
+
+                    <!-- 輸入錯誤訊息 -->
+                    <div id="card-errors" class="displayError.textContent!=='': 'alert-danger mt-1'" ></div>
+                  </div>
+
+                 
+                 <!-- 訂單內容 -->
+                 <div class="form-area">
+                    <h3>您的訂單內容</h3>
+
+                    <p>總數量: {{totalQuantity}}</p>
+                    <p>總價: {{totalPrice}}元</p>
+                 </div>
+
+                 <!-- 提交 -->
+                 <div class="text-center">
+                    <button type="submit" class="btn btn-info" [disabled]="isDisabled">submit</button>
+                 </div>
+            </form>
+        
+        </div>
+    </div>
+</div>

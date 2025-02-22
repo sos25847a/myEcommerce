@@ -1,0 +1,34 @@
+<div class="main-content">
+    <div class="section-content section-content-p30">
+        <div class="container-fluid">
+            <h3>你的訂單</h3>
+
+            <div *ngIf="orderHistoryList.length>0">
+                 <table class="table table-bordered">
+                    <tr>
+                        <th width="20%">訂單編號</th>
+                        <th width="10%">總價</th>
+                        <th width="10%">總數</th>
+                        <th width="10%">成立時間</th>
+                    </tr>
+
+                    <tr *ngFor="let tempOrderHistory of orderHistoryList">
+                        <td>{{tempOrderHistory.orderTrackingNumber}}</td>
+                        <td>{{tempOrderHistory.totalPrice }}</td>
+                        <td>{{tempOrderHistory.totalQuantity}}</td>
+                        <td>{{tempOrderHistory.dateCreated | date:'medium'}}</td>
+                    </tr>
+                 </table>
+            </div>
+
+
+
+            <!-- 沒有訂單 -->
+
+            <div *ngIf="orderHistoryList.length==0" class="alert alert-warning col-md-12" role="alert">
+                沒有訂單
+            </div>
+            
+        </div>
+    </div>
+</div>
