@@ -1,15 +1,12 @@
-# MyEcommerce
+# MyEcommerce - 電商網站
 
-這是一個基於 Spring Boot 和 Angular 的電商專案，包含用戶註冊、商品管理、購物車與 Stripe 付款功能。
+## 專案概述
+這是一個基於 Spring Boot 和 Angular 的全端電商專案，實現了商品管理、用戶登入、訂單處理、支付系統等功能。後端使用Spring Boot提供RESTful API，前端則利用Angular進行動態頁面渲染與數據交互。
 
-## 技術棧
-- **後端**: Spring Boot, Spring Data JPA, MySQL, Spring Security, Stripe API
-- **前端**: Angular, TypeScript, Bootstrap,  Stripe支付
-- **身份驗證**: Okta2 + JWT
 ### 1. 環境需求
 - Node.js
 - npm 
 - tsc   
 - JDK 17
 - MySQL 
-
+### 2.技術棧
