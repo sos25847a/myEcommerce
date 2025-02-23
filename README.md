@@ -23,7 +23,7 @@
 ## **2. 技術棧**
 ### **後端技術**（Spring Boot）
 - **Spring Boot** - 構建 RESTful API，負責商品、用戶、訂單等資料的 **CRUD** 操作，實現三層架構（Controller, Service, Repository）。
-- **Spring Security + JWT + Okta** - 用戶身份驗證、登入及授權管理。
+- **Spring Security + JWT + Okta** - 用戶身份驗證登入及管理。
 - **Spring Data JPA + MySQL** - 資料庫操作，設計並管理 **商品、用戶、訂單** 等資料表。
 - **Stripe API** - 線上支付功能，處理訂單付款。
 - **TLS/SSL** - 提供安全的 API 連線。
