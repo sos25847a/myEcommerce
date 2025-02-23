@@ -29,7 +29,7 @@
 - **TLS/SSL** - 確保前後端 API 安全傳輸。
 
 ### **前端技術**（Angular）
-- **Angular (TypeScript, HTML, CSS, Bootstrap)** - 前端框架，負責頁面開發與與後端 API 交互。
+- **Angular (TypeScript, HTML, CSS)** - 前端框架，負責頁面開發與與後端 API 交互。
 - **Bootstrap + 自訂 CSS** - 設計 UI。
 - **RxJS (Observables)** - 處理非同步數據交互。
 - **Okta 2.0** - 身分驗證機制，與後端配合實現安全登入驗證。
