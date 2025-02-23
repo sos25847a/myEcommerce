@@ -11,7 +11,7 @@
 - MySQL 
 ### 2.技術棧:
  Spring Boot, Spring Data JPA, MySQL, Angular, Stripe, JWT, Okta
- # 後端:
+ ### 後端:
 -使用 Spring Boot設計 RESTful API，負責商品、用戶、訂單等資料的 CRUD 操作，實現三層架構（Controller, Service, Repository），分離業務邏輯、資料庫操作與請求處理
 -整合 Spring Security、 Okta2.0、JWT令牌，實現用戶身份驗證登入。
 -使用 Spring Data JPA 和 MySQL 進行資料庫操作，設計並管理商品、用戶、訂單等資料表。
