@@ -26,11 +26,11 @@
 - **Spring Security + JWT + Okta** - 用戶身份驗證登入及管理。
 - **Spring Data JPA + MySQL** - 資料庫操作，設計並管理 **商品、用戶、訂單** 等資料表。
 - **Stripe API** - 線上支付功能，處理訂單付款。
-- **TLS/SSL** - 提供安全的 API 連線。
+- **TLS/SSL** - 確保前後端 API 安全傳輸。
 
 ### **前端技術**（Angular）
 - **Angular (TypeScript, HTML, CSS, Bootstrap)** - 前端框架，負責頁面開發與與後端 API 交互。
-- **Bootstrap + 自訂 CSS** - 設計響應式 UI，提升用戶體驗。
+- **Bootstrap + 自訂 CSS** - 設計 UI。
 - **RxJS (Observables)** - 處理非同步數據交互。
-- **Okta 2.0** - 身分驗證機制，與後端配合實現安全登入與存取控制。
-- **TLS/SSL** - 確保前後端 API 安全加密傳輸。
+- **Okta 2.0** - 身分驗證機制，與後端配合實現安全登入驗證。
+- **TLS/SSL** - 確保前後端 API 安全傳輸。
